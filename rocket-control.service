@@ -1,0 +1,15 @@
+[Unit]
+Description=Rocket Control System Backend
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/rocket
+Environment=PATH=/home/pi/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/python3 /home/pi/rocket/raspberry_pi_backend.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target 

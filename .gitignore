@@ -1,0 +1,136 @@
+# ============================================
+# Rocket Control System - .gitignore
+# ============================================
+
+# --- Python (Backend) ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+venv/
+env/
+ENV/
+.venv
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# --- Node/React (Frontend) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.npm
+.eslintcache
+build/
+dist/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+
+# --- STM32 CubeIDE ---
+stm32_firmware/Debug/
+stm32_firmware/Release/
+*.elf
+*.map
+*.o
+*.su
+*.cyclo
+*.d
+*.list
+.mxproject
+.cproject
+.project
+.settings/
+*.ioc.bak
+*.launch.bak
+
+# --- Arduino ---
+*.hex
+*.bin
+
+# --- Build Artifacts ---
+*.exe
+*.spec
+build/KontrolPaneli/
+dist/KontrolPaneli.exe
+
+# --- IDE & Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# --- OS Files ---
+.DS_Store
+*.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs & Temporary Files ---
+*.log
+logs/
+*.log.*
+*.tmp
+*.debug
+
+# --- Environment & Config ---
+.env
+.env.local
+.env.*.local
+*.env
+
+# --- Test Data & Outputs ---
+*.parquet
+*.npy
+buffer_backup_*.npy
+sensor_log_*.parquet
+*.test
+test_output/
+
+# --- Documentation Builds ---
+docs/_build/
+site/
+
+# --- Backup Files ---
+*~
+*.bak
+*.backup
+*_backup
+*_old
+*-Kopya.*
+
+# --- Jupyter Notebook ---
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# --- Package Managers ---
+# Note: package-lock.json should be committed for version consistency
+yarn.lock
+pnpm-lock.yaml
+
+# --- Coverage Reports ---
+coverage/
+.nyc_output/
+*.lcov
+
+# --- Misc ---
+*.orig
+*.rej
+.cache/
+.temp/

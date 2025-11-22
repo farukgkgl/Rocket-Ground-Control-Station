@@ -1,0 +1,2002 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: radial-gradient(ellipse at center, #2c3e50 0%, #1a252f 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+/* Vana panelinin boyutunu arttırmak için aşağıdaki satırlar etkili olur */
+.valve-panel-section {
+  background: #18181b;
+  border-radius: 1.25rem;
+  padding: 1rem 1rem 1rem 1rem;
+  margin-top: 2rem;
+  max-width: 600px;   /* wider panel */
+  min-width: 300px;   /* optional: minimum width */
+  width: 100%;     
+  height: 400px;   /* optional: full width of parent */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.valve-panel-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+/* Yeni isim: Solenoid Paneli */
+.solenoid-panel-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.valve-panel-grid {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.valve-panel-btn {
+  min-width: 80px;
+  min-height: 110px;
+  font-size: 1.5rem;
+  padding: 2.2rem 0.5rem 1.2rem 0.5rem;
+}
+
+.valve-panel-number {
+  font-size: 2.2rem;
+}
+/* Dashboard Styles */
+.dashboard-container {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center, #2c3e50 0%, #1a252f 100%);
+  color: white;
+  padding: 1.5rem;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.simulation-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #18181b;
+  border: 1.5px solid #444950;
+  color: #fff;
+  animation: simulation-pulse 2s infinite;
+}
+
+.simulation-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #fbbf24;
+  animation: simulation-dot-pulse 1s infinite;
+}
+
+@keyframes simulation-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1);
+  }
+}
+
+@keyframes simulation-dot-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #18181b;
+  border: 1.5px solid #444950;
+  color: #fff;
+}
+
+.connection-status.connected {
+  color: #4ade80;
+}
+
+.connection-status.disconnected {
+  color: #f87171;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  animation: pulse 2s infinite;
+}
+
+.connection-status.connected .status-dot {
+  background-color: #4ade80;
+}
+
+.connection-status.disconnected .status-dot {
+  background-color: #f87171;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.dashboard-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.view-toggle-btn {
+  background-color: #18181b;
+  color: #fff;
+  border: 1.5px solid #444950;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.view-toggle-btn:hover {
+  background-color: #23272a;
+}
+
+.status-cards {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.status-card {
+  background-color: #18181b;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.7rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+  max-width: 180px;
+}
+
+.status-card-label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.status-card-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4ade80;
+}
+
+.status-card-value.vanes {
+  color: white;
+}
+
+.status-card-value.status {
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-card.vanes,
+.status-card.status-yellow,
+.status-card.status-blue,
+.status-card.status-red {
+  min-width: 240px;
+  max-width: 340px;
+  padding: 0.8rem 1.2rem;
+  font-size: 1.2rem;
+}
+
+.status-card.status-yellow {
+  border: 2px solid #facc15;
+  box-shadow: 0 0 0 0 #facc1555;
+  animation: yellow-pulse-border 1.2s infinite;
+  position: relative;
+}
+.status-card.status-blue {
+  border: 2px solid #60a5fa;
+  box-shadow: 0 0 0 0 #60a5fa55;
+  animation: blue-pulse-border 1.2s infinite;
+  position: relative;
+}
+.status-card.status-red {
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 0 0 #ef444455;
+  animation: red-pulse-border 1.2s infinite;
+  position: relative;
+}
+
+@keyframes yellow-pulse-border {
+  0% { box-shadow: 0 0 0 0 #facc1555; border-color: #facc15; }
+  50% { box-shadow: 0 0 12px 4px #facc15aa; border-color: #fde047; }
+  100% { box-shadow: 0 0 0 0 #facc1555; border-color: #facc15; }
+}
+@keyframes blue-pulse-border {
+  0% { box-shadow: 0 0 0 0 #60a5fa55; border-color: #60a5fa; }
+  50% { box-shadow: 0 0 12px 4px #60a5fa99; border-color: #3b82f6; }
+  100% { box-shadow: 0 0 0 0 #60a5fa55; border-color: #60a5fa; }
+}
+@keyframes red-pulse-border {
+  0% { box-shadow: 0 0 0 0 #ef444455; border-color: #ef4444; }
+  50% { box-shadow: 0 0 12px 4px #ef4444aa; border-color: #f87171; }
+  100% { box-shadow: 0 0 0 0 #ef444455; border-color: #ef4444; }
+}
+
+.status-card.status-yellow .status-card-value.status.yellow {
+  color: #facc15;
+}
+.status-card.status-blue .status-card-value.status.blue {
+  color: #60a5fa;
+}
+.status-card.status-red .status-card-value.status.red {
+  color: #ef4444;
+}
+
+.status-card-value.vanes-large {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  line-height: 1.1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+/* Eski sensör grid - artık kullanılmıyor, birleşik panel kullanılıyor */
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+}
+
+.sensor-grid .sensor-card-large {
+  grid-row: 1;
+}
+
+.sensor-grid .sensor-card-small {
+  grid-row: 2;
+}
+
+.sensor-card,
+.sensor-card-large,
+.sensor-card-small {
+  background-color: #27272a;
+  border: 1px solid #374151;
+  border-radius: 0;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s ease;
+  color: #fff;
+}
+
+.sensor-card:hover,
+.sensor-card-large:hover,
+.sensor-card-small:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+  transform: translateY(-1px);
+}
+
+.sensor-label,
+.sensor-value {
+  color: #fff;
+}
+
+.sensor-card-large {
+  min-height: 80px;
+}
+
+.sensor-card-small {
+  min-height: 80px;
+}
+
+.sensor-label {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.3rem;
+  font-family: 'Roboto Mono', 'Courier New', monospace;
+  text-transform: uppercase;
+}
+
+.sensor-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-family: 'Roboto Mono', 'Courier New', monospace;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.sensor-value.temperature {
+  color: #93c5fd;
+}
+
+.sensor-value-blue {
+  color: #60a5fa !important;
+}
+.sensor-value-yellow {
+  color: #facc15 !important;
+}
+.sensor-value-red {
+  color: #ef4444 !important;
+}
+.sensor-value-green {
+  color: #22c55e !important;
+}
+
+.control-section {
+  background-color: #23272a;
+  border: 2.5px solid #444950;
+  color: #fff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.control-title {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.control-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.control-btn {
+  background-color: #23272a;
+  color: #fff;
+  border: 2.5px solid #444950;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.control-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.control-btn:disabled {
+  background-color: #3f3f46;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Yakıt Besleme (Turuncu) */
+.control-btn.fuel {
+  background-color: #23272a;
+  color: #ff9800;
+  border: 2.5px solid #ff9800;
+}
+.control-btn.fuel:hover:not(:disabled) {
+  background-color: #2d2d2d;
+  color: #ffa726;
+  border-color: #ffa726;
+}
+
+/* Otomasyon Modu (Mor) */
+.control-btn.automation {
+  background-color: #23272a;
+  color: #a259f7;
+  border: 2.5px solid #a259f7;
+}
+.control-btn.automation:hover:not(:disabled) {
+  background-color: #2d2d2d;
+  color: #b983ff;
+  border-color: #b983ff;
+}
+
+/* Acil Durum (Kırmızı) */
+.control-btn.emergency {
+  background-color: #23272a;
+  color: #ff3b3b;
+  border: 2.5px solid #ff3b3b;
+}
+.control-btn.emergency:hover:not(:disabled) {
+  background-color: #2d2d2d;
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+.control-btn.reset {
+  background-color: #52525b;
+}
+
+.control-btn.reset:hover:not(:disabled) {
+  background-color: #3f3f46;
+}
+
+.control-btn.test {
+  background-color: #2563eb;
+}
+
+.control-btn.test:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+/* Buton kontrolü stilleri */
+.control-btn.button-active {
+  background-color: #059669 !important;
+  border-color: #10b981 !important;
+  color: #ffffff !important;
+}
+
+.control-btn.button-active:hover:not(:disabled) {
+  background-color: #047857 !important;
+  border-color: #059669 !important;
+}
+
+.control-btn.button-inactive {
+  background-color: #374151 !important;
+  border-color: #6b7280 !important;
+  color: #9ca3af !important;
+}
+
+.control-btn.button-inactive:hover:not(:disabled) {
+  background-color: #4b5563 !important;
+  border-color: #9ca3af !important;
+}
+
+/* Diagram View Styles */
+.diagram-header {
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.diagram-container-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.diagram-wrapper {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.diagram-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000 url(/besleme-sistemi.png) no-repeat center center;
+  background-size: contain;
+  min-height: 400px;
+}
+
+/* Existing styles for diagram components */
+.sv-display {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #374151;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+}
+
+.sv-display:active {
+  transform: translateY(2px);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.sv-display.on {
+  background: linear-gradient(145deg, #22c55e, #16a34a);
+  border-color: #15803d;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(34, 197, 94, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.sv-display.off {
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+  border-color: #b91c1c;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.sv-display:hover {
+  transform: scale(1.1);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(59, 130, 246, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.sv-display:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(50%);
+}
+
+.sv-display.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(50%);
+}
+
+.grouped-sensor-display {
+  position: absolute;
+  display: flex;
+  gap: 2px;
+  background: rgba(44, 62, 80, 0.3);
+  padding: 2px;
+  border-radius: 8px;
+  border: 1px solid rgba(52, 152, 219, 0.4);
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+  transition: all 0.2s ease;
+}
+
+.grouped-sensor-display:hover {
+  border-color: rgba(96, 165, 250, 0.6);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.3);
+}
+
+.sensor-readings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sensor-readings-container.horizontal {
+  flex-direction: row;
+  gap: 6px;
+}
+
+.sensor-reading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #1a252f;
+  min-width: auto;
+  border: 1px solid #34495e;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+  font-family: 'Roboto Mono', 'Courier New', Courier, monospace;
+}
+
+.sensor-reading .sensor-label {
+  font-weight: 500;
+  font-size: 10px;
+  color: #95a5a6;
+}
+
+.sensor-reading .sensor-value {
+  font-weight: 700;
+  margin-left: 5px;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.sensor-anchor {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: #64748b;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.grouped-sensor-display.emergency-mode {
+  background-color: rgba(231, 76, 60, 0.9) !important;
+  border-color: #c0392b !important;
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.2),
+    inset 0 1px 1px rgba(255,255,255,0.05),
+    0 0 15px rgba(231, 76, 60, 0.5) !important;
+  animation: emergency-pulse 2s infinite;
+}
+
+@keyframes emergency-pulse {
+  0% { box-shadow: 
+    0 4px 8px rgba(0,0,0,0.2),
+    inset 0 1px 1px rgba(255,255,255,0.05),
+    0 0 15px rgba(231, 76, 60, 0.5); }
+  50% { box-shadow: 
+    0 4px 8px rgba(0,0,0,0.2),
+    inset 0 1px 1px rgba(255,255,255,0.05),
+    0 0 25px rgba(231, 76, 60, 0.8); }
+  100% { box-shadow: 
+    0 4px 8px rgba(0,0,0,0.2),
+    inset 0 1px 1px rgba(255,255,255,0.05),
+    0 0 15px rgba(231, 76, 60, 0.5); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+  
+  .status-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .sensor-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .control-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .sv-display {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+  
+  .grouped-sensor-display {
+    padding: 4px;
+    gap: 2px;
+  }
+  
+  .sensor-reading {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+  
+  .sensor-label, .sensor-value {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sensor-card,
+  .sensor-card-large,
+  .sensor-card-small {
+    padding: 0.5rem;
+  }
+  
+  .sensor-value {
+    font-size: 0.875rem;
+  }
+  
+  .sv-display {
+    width: 20px;
+    height: 20px;
+    font-size: 8px;
+  }
+  
+  .grouped-sensor-display {
+    padding: 3px;
+  }
+  
+  .sensor-reading {
+    padding: 2px 4px;
+    font-size: 9px;
+  }
+  
+  .sensor-label, .sensor-value {
+    font-size: 8px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .sensor-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .sensor-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Icon size classes */
+.w-3 {
+  width: 0.75rem;
+}
+
+.h-3 {
+  height: 0.75rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.h-4 {
+  height: 1rem;
+}
+
+.w-5 {
+  width: 1.25rem;
+}
+
+.h-5 {
+  height: 1.25rem;
+}
+
+/* Sensör kutucukları için glassmorphism ve modern stil */
+.sensor-unified-card {
+  background: rgba(30, 41, 59, 0.92);
+  border-radius: 10px;
+  padding: 5px 10px;
+  box-shadow: 0 4px 14px 0 rgba(30, 41, 59, 0.18), 0 1px 3px 0 rgba(52, 152, 219, 0.10);
+  border: 1.2px solid #334155;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  min-width: 70px;
+  font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+  backdrop-filter: blur(5px);
+  transition: box-shadow 0.18s, border-color 0.18s, background 0.18s, transform 0.18s;
+}
+
+.sensor-unified-card:hover {
+  background: rgba(51, 65, 85, 0.98);
+  box-shadow: 0 8px 24px 0 rgba(30, 64, 175, 0.22), 0 2px 8px 0 rgba(52, 152, 219, 0.18);
+  border-color: #60a5fa;
+  transform: scale(1.035);
+}
+
+.sensor-label-pro {
+  font-size: 11px;
+  font-weight: 600;
+  color: #cbd5e1;
+  letter-spacing: 0.5px;
+  margin-right: 1px;
+  text-transform: uppercase;
+}
+
+.sensor-value-pro {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f1f5f9;
+  background: rgba(51, 65, 85, 0.85);
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-left: 1px;
+  box-shadow: 0 1.5px 6px rgba(30,41,59,0.10);
+  border: 1.2px solid #64748b;
+  min-width: 28px;
+  display: inline-block;
+  text-align: right;
+  letter-spacing: 0.2px;
+}
+
+.sensor-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.sensor-separator {
+  color: #64748b;
+  font-weight: 400;
+  margin: 0 4px;
+  font-size: 13px;
+}
+
+/* Make valve symbol always visible with contrasting colors */
+.sv-display .valve-body {
+  fill: #e5e7eb; 
+}
+.sv-display .valve-actuator-top {
+  fill: #f9fafb; 
+}
+.sv-display .valve-actuator-stem {
+  fill: #d1d5db;
+}
+
+/* Vana Kontrolü Stilleri */
+.valve-section {
+  background-color: #27272a;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.valve-title {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.valve-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.valve-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.valve-label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.valve-btn {
+  background-color: #3f3f46;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 80px;
+}
+
+.valve-btn:hover:not(:disabled) {
+  background-color: #52525b;
+  transform: translateY(-1px);
+}
+
+.valve-btn.active {
+  background-color: #4ade80;
+  color: #064e3b;
+}
+
+.valve-btn.active:hover:not(:disabled) {
+  background-color: #22c55e;
+}
+
+.valve-btn:disabled {
+  background-color: #1f2937;
+  color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Birleşik Sensör ve Performans Paneli Stilleri */
+.unified-sensor-panel {
+  background-color: #18181b;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #27272a;
+}
+
+.unified-sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.unified-sensor-grid .sensor-card,
+.unified-sensor-grid .sensor-card-large,
+.unified-sensor-grid .sensor-card-small,
+.unified-sensor-grid .performance-card {
+  grid-column: span 1;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive tasarım için birleşik panel */
+@media (max-width: 1200px) {
+  .unified-sensor-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .unified-sensor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .unified-sensor-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .unified-sensor-grid .sensor-card,
+  .unified-sensor-grid .sensor-card-large,
+  .unified-sensor-grid .sensor-card-small,
+  .unified-sensor-grid .performance-card {
+    min-height: 80px;
+  }
+}
+
+/* Kritik Performans Verileri Stilleri */
+.performance-section {
+  background-color: #18181b;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #27272a;
+}
+
+.performance-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.performance-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.performance-card {
+  background-color: #27272a;
+  border: 1px solid #374151;
+  border-radius: 0;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  transition: all 0.2s ease;
+  min-height: 80px;
+}
+
+.performance-card:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+  transform: translateY(-1px);
+}
+
+.performance-label {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.3rem;
+}
+
+.performance-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-family: 'Roboto Mono', 'Courier New', monospace;
+  text-align: center;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive tasarım için performans kartları */
+@media (max-width: 1200px) {
+  .performance-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .performance-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .performance-card {
+    padding: 0.5rem;
+    min-height: 80px;
+  }
+  
+  .performance-value {
+    font-size: 0.875rem;
+  }
+}
+
+/* Log Section Stilleri */
+.log-section {
+  background-color: #27272a;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.log-title {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.log-container {
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #18181b;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+}
+
+.log-entry {
+  font-size: 0.75rem;
+  color: #d1d5db;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #374151;
+  font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-empty {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-align: center;
+  padding: 1rem;
+  font-style: italic;
+}
+
+/* Scrollbar stilleri */
+.log-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.log-container::-webkit-scrollbar-track {
+  background: #374151;
+  border-radius: 3px;
+}
+
+.log-container::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 3px;
+}
+
+.log-container::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.valve-symbol {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.valve-number {
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  color: #ffffff;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  letter-spacing: 0.5px;
+}
+
+.keyboard-shortcuts {
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background-color: #1e293b;
+  border-radius: 0.5rem;
+  text-align: center;
+  border: 1px solid #334155;
+}
+
+.keyboard-shortcuts small {
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+/* Sızıntı Testi Konfigürasyonu Stilleri */
+.config-section {
+  background-color: #18181b;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #27272a;
+}
+
+.config-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.config-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.config-toggle-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.config-toggle-btn:hover {
+  background-color: #2563eb;
+}
+
+.config-content {
+  border-top: 1px solid #27272a;
+  padding-top: 1rem;
+}
+
+.config-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #27272a;
+  border-radius: 0.5rem;
+}
+
+.config-row label {
+  color: #e5e7eb;
+  font-weight: 500;
+  min-width: 150px;
+}
+
+.config-input {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  width: 80px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.config-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.config-row span {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+.valve-sequence-config {
+  background-color: #27272a;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.valve-sequence-config h4 {
+  color: white;
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.sequence-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background-color: #1f2937;
+  border-radius: 0.375rem;
+  border: 1px solid #374151;
+}
+
+.sequence-valve {
+  min-width: 80px;
+}
+
+.sequence-valve span {
+  color: #e5e7eb;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.sequence-delay {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.sequence-delay .config-input {
+  width: 60px;
+}
+
+.remove-btn {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.remove-btn:hover {
+  background-color: #b91c1c;
+}
+
+.add-btn {
+  background-color: #059669;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.add-btn:hover:not(:disabled) {
+  background-color: #047857;
+}
+
+.add-btn:disabled {
+  background-color: #374151;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* Responsive tasarım için ek stiller */
+@media (max-width: 768px) {
+  .config-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .config-row label {
+    min-width: auto;
+  }
+  
+  .sequence-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .sequence-delay {
+    width: 100%;
+  }
+  
+  .config-input {
+    width: 100%;
+  }
+}
+
+/* Step Motor Kontrol Stilleri */
+.step-motor-control {
+  border-color: rgba(139, 92, 246, 0.4) !important;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.2) !important;
+}
+
+.step-motor-control:hover {
+  border-color: rgba(139, 92, 246, 0.6) !important;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.3) !important;
+}
+
+.step-motor-input {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100px;
+  text-align: center;
+  font-family: 'Roboto Mono', 'Courier New', Courier, monospace;
+  transition: all 0.2s ease;
+}
+
+.step-motor-input::placeholder {
+  color: rgba(156, 163, 175, 0.5);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.step-motor-input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+  background-color: #374151;
+}
+
+.step-motor-input:focus::placeholder {
+  opacity: 0.3;
+  color: rgba(156, 163, 175, 0.3);
+}
+
+.step-motor-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #1f2937;
+}
+
+.step-motor-input::-webkit-inner-spin-button,
+.step-motor-input::-webkit-outer-spin-button {
+  opacity: 1;
+  height: 20px;
+}
+
+/* Step motor kutucuğu için özel renkler */
+.step-motor-control .sensor-label-pro {
+  color: #a78bfa;
+}
+
+.step-motor-control .sensor-value-pro {
+  color: #e5e7eb;
+}
+
+.notification-box {
+  position: fixed;
+  top: 24px;
+  right: 32px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 220px;
+  max-width: 300px;
+  pointer-events: none;
+}
+
+.notification-item {
+  background: rgba(31, 41, 55, 0.92);
+  color: #f9fafb;
+  border-left: 5px solid #10b981;
+  border-radius: 12px;
+  padding: 12px 18px 12px 14px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: 'Montserrat', 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(16,185,129,0.08);
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.25s, background 0.25s, border 0.25s;
+}
+
+.notification-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7);
+  animation: notification-progress 3s linear;
+}
+
+.notification-item.entering {
+  animation: notification-slide-in-pro 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.notification-item.exiting {
+  animation: notification-slide-out-pro 0.32s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes notification-slide-in-pro {
+  0% {
+    opacity: 0;
+    transform: translateY(-30%) scale(0.95) skewX(-8deg);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(8%) scale(1.03) skewX(2deg);
+    filter: blur(0.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) skewX(0deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes notification-slide-out-pro {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1) skewX(0deg);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30%) scale(0.95) skewX(-8deg);
+    filter: blur(6px);
+  }
+}
+
+@keyframes notification-progress {
+  0% { width: 100%; }
+  100% { width: 0%; }
+}
+
+.notification-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Vana Paneli (Yeni) */
+.valve-panel-section {
+  background: #18181b;
+  border-radius: 1.25rem;
+  padding: 1rem 1.5rem;
+  margin-top: 2rem;
+  max-width: 420px;
+  margin-left: 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.valve-panel-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+/* Yeni isim: Solenoid Paneli */
+.solenoid-panel-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.valve-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.valve-panel-btn {
+  background: linear-gradient(135deg, #23272f 60%, #1e293b 100%);
+  border: 2px solid #374151;
+  border-radius: 1rem;
+  color: #f9fafb;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 2.2rem 0.5rem 1.2rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s, border 0.2s, transform 0.1s;
+  min-width: 80px;
+  min-height: 110px;
+  outline: none;
+}
+
+.valve-panel-btn.active {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e42 100%);
+  color: #23272f;
+  border-color: #fbbf24;
+  box-shadow: 0 4px 16px rgba(251,191,36,0.10);
+  transform: scale(1.04);
+}
+
+.valve-panel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.valve-panel-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #374151 60%, #23272f 100%);
+  border-color: #fbbf24;
+  color: #fbbf24;
+  transform: scale(1.03);
+}
+
+.valve-panel-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+.valve-panel-state {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 0.2rem;
+  color: #fbbf24;
+}
+
+/* Retro/Eski tarz vana paneli */
+.diagram-valve-panel {
+  max-width: var(--valve-panel-width, 25vw);   /* Responsive width */
+  min-width: var(--valve-panel-width, 300px);  /* Minimum width */
+  height: var(--valve-panel-height, 15vh);     /* Responsive height */
+  min-height: var(--valve-panel-min-height, 120px); /* Minimum height */
+  padding: 0.1rem 0.1rem;
+  margin-top: .8rem;
+  margin-left: .5rem;
+  background: #23272a;
+  border: 2px solid #444950;
+  border-radius: 0px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.diagram-valve-panel-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+  margin-top: -1rem;
+}
+
+.diagram-valve-panel .valve-panel-btn {
+  min-width: 28px;
+  min-height: 20px;
+  font-size: 0.65rem;
+  padding: 2px 0 1px 0;
+  border-radius: 0px;
+  border: 2.5px solid #111 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  background: #181a1d;
+  color: #e5e7eb;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.35s cubic-bezier(0.4,0,0.2,1), color 0.25s, border 0.25s;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.diagram-valve-panel .valve-panel-btn.open::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top: 2px solid #22c55e;
+  border-bottom: 2px solid #16a34a;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: solenoid-spin 1.1s linear infinite;
+  z-index: 1;
+}
+
+@keyframes solenoid-spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.diagram-valve-panel .valve-panel-btn.closed::after {
+  display: none;
+}
+
+.diagram-valve-panel .valve-panel-number {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 8px #000, 0 1px 0 #222, 0 0px 2px #000;
+  min-width: 1em;
+  text-align: center;
+  letter-spacing: 1px;
+  transition: color 0.25s;
+  position: relative;
+  z-index: 2;
+}
+
+.diagram-sensor-panel {
+  max-width: 340px;
+  min-width: 340px;
+  height: 500px;
+  padding: 0;
+  margin-top: 1.2rem;
+  margin-left: 0.5rem;
+  background: #23272a;
+  border: 2px solid #444950;
+  border-radius: 10px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.sensor-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(10, 1fr);
+  gap: 0.08rem;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+  justify-items: center;
+  margin-top: -0.3rem;
+}
+
+.sensor-panel-cell {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sensor-panel-label {
+  font-size: 0.7rem;
+  color: #b6bfc6;
+  font-weight: 500;
+  margin-bottom: 0.08em;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.sensor-panel-box {
+  width: 95%;
+  box-sizing: border-box;
+  background: #181a1d;
+  color: #e5e7eb;
+  border: 2px solid #666b73;
+  border-radius: 5px;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  max-height: 30px;
+  letter-spacing: 0.5px;
+  padding: 0.05em 0.2em;
+  margin-left: 3.5px;
+}
+
+.sensor-panel-cell-hover,
+.sensor-panel-box-hover {
+  box-shadow: 0 0 0 4px #60a5fa55, 0 0 18px 6px #60a5fa99;
+  outline: none !important;
+  border-color: #666b73 !important;
+  background: #181a1d !important;
+  transition: box-shadow 0.18s;
+}
+
+.sensor-anchor-hover {
+  background-color: #60a5fa !important;
+  box-shadow: 0 0 0 4px #60a5fa55, 0 0 12px 4px #60a5fa99;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.diagram-sensor-panel .valve-panel-title {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+  font-weight: 800;
+  text-align: center;
+  display: block;
+  color: #fff;
+}
+
+.diagram-anchor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 40%, #e5e7eb 70%, #a3a3a3 100%);
+  border: 2px solid #d1d5db;
+  box-shadow: 0 0 6px 1.5px #cbd5e1aa, 0 1px 4px 0 #a3a3a399;
+  transition: box-shadow 0.18s, background 0.18s, border 0.18s, transform 0.18s;
+  z-index: 1002;
+  pointer-events: auto;
+  cursor: pointer;
+  position: relative;
+}
+
+.diagram-anchor-dot-hover {
+  background: radial-gradient(circle at 60% 40%, #fee2e2 80%, #ef4444 100%);
+  border-color: #dc2626;
+  box-shadow: 0 0 22px 10px #ef4444cc, 0 0 0 4px #dc262699;
+  transform: scale(1.35);
+  z-index: 10;
+}
+
+.diagram-dot-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+/* Only anchor dots themselves should be clickable, not the layer */
+.diagram-dot-layer .diagram-anchor-dot {
+  pointer-events: auto;
+}
+
+.status-panel-root {
+  /* position: fixed; */
+  /* top: 32px; */
+  /* right: 32px; */
+  min-width: 120px;
+  max-width: 140px;
+  background: rgba(10, 10, 10, 0.98);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.45), 0 1.5px 6px 0 rgba(52, 152, 219, 0.10);
+  border: 2px solid #18181b;
+  /* z-index: 1000; */
+  padding: 0.4rem 0.5rem 0.7rem 0.5rem;
+  color: #e5e7eb;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  animation: status-panel-fadein 0.25s;
+  height: 100px;
+  min-height: 140px;
+  max-height: 140px;
+}
+
+/* Her panel bir öncekinden aşağıda gözüksün */
+/* .status-panel-root + .status-panel-root {
+  margin-top: 2.2rem;
+} */
+
+.diagram-valve-panel .valve-panel-title {
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.diagram-valve-panel .valve-panel-btn.open {
+  background: linear-gradient(135deg, #22c55e 60%, #16a34a 100%);
+  border-color: #15803d;
+  color: #fff;
+  box-shadow: 0 0 8px 1px #22c55e44;
+  transition: background 0.25s, border 0.25s, color 0.25s;
+}
+.diagram-valve-panel .valve-panel-btn.closed {
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+  border-color: #b91c1c;
+  color: #fff;
+  box-shadow: 0 0 8px 1px #ef444444;
+  transition: background 0.25s, border 0.25s, color 0.25s;
+}
+
+.diagram-valve-panel,
+.diagram-valve-panel .valve-panel-btn,
+.diagram-sensor-panel,
+.sensor-panel-box,
+.valve-panel-section.info-panel,
+.valve-panel-section.info-panel .valve-panel-btn,
+.valve-panel-section.info-panel .step-motor-input {
+  border-radius: 0 !important;
+}
+
+.valve-panel-section.info-panel {
+  width: 350px !important;
+  min-width: 120px !important;
+  height: 180px !important;
+  padding: 18px 6px !important;
+  padding-top: 20px !important;
+}
+.valve-panel-section.info-panel .valve-panel-title {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+/* Remove this if present */
+/* .valve-panel-section.info-panel > * { margin-top: 32px; } */
+
+.sensor-value-white {
+  color: #fff !important;
+}
+
+.sensor-label-strong {
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  color: #fbbf24;
+  text-shadow: 0 2px 8px #000, 0 1px 0 #222, 0 0px 2px #000;
+}
+
+.sensor-label-yellow {
+  color: #facc15 !important;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+  text-shadow: none;
+  font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+}
+
+.sensor-label-blue {
+  color: #60a5fa !important;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+  text-shadow: none;
+  font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+}
+
+.sensor-panel-cell-hover,
+.sensor-panel-box-hover {
+  box-shadow: 0 0 0 4px #60a5fa55, 0 0 18px 6px #60a5fa99;
+  outline: none !important;
+  border-color: #666b73 !important;
+  background: #181a1d !important;
+  transition: box-shadow 0.18s;
+}
+
+.sensor-panel-cell,
+.sensor-panel-cell-hover,
+.sensor-panel-box-hover {
+  outline: none !important;
+  outline-color: transparent !important;
+}
+
+.control-btn.test-blue {
+  background-color: #23272a;   /* blue-600 */
+  color: #25eb56;
+  border: 2.5px solid #25eb56;
+}
+.control-btn.test-blue:hover:not(:disabled) {
+  background-color: #2d2d2d;   /* blue-700 */
+  border-color: #25eb56;
+}
